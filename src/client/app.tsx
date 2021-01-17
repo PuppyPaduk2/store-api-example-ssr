@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button } from "antd";
 
 const { useState } = React;
 
@@ -8,9 +9,9 @@ export const App = () => {
   return (
     <div>
       <div>{num}</div>
-      <button onClick={() => {
+      <Button onClick={() => {
         set((prev) => prev + 1);
-      }}>Add</button>
+      }}>Add</Button>
     </div>
   );
 };

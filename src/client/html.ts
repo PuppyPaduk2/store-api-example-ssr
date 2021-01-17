@@ -5,6 +5,7 @@ export function html(payload: { title?: string; content: string }) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>${payload.title ?? ""}</title>
+        <link rel="stylesheet" href="./main.css">
       </head>
 
       <body>
