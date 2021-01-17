@@ -3,7 +3,7 @@ const NodemonPlugin = require("nodemon-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
-  entry: "./src/server/index.ts",
+  entry: "./src/server/index.tsx",
   mode: "development",
   module: {
     rules: [
