@@ -1,4 +1,8 @@
-export function html(payload: { title?: string; content: string }) {
+export function html(payload: {
+  title?: string;
+  content: string,
+  data?: object;
+}) {
   return `
     <!doctype html>
     <html>
@@ -10,6 +14,11 @@ export function html(payload: { title?: string; content: string }) {
 
       <body>
         <div id="root">${payload.content}</div>
+        <script type="text/javascript">
+          window.initData=${
+            payload.data ? JSON.stringify(payload.data) : "null"
+          };
+        </script>
         <script type="text/javascript" src="./index.js"></script>
       </body>
     </html>

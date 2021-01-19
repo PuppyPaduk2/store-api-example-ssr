@@ -2770,13 +2770,13 @@ source-map@~0.7.2:
 
 "store-api-react@https://github.com/EvgenyiFedotov/store-api-react.git":
   version "0.0.1"
-  resolved "https://github.com/EvgenyiFedotov/store-api-react.git#756c0e9ab9fc66823361e15efd8c24c1f02c5976"
+  resolved "https://github.com/EvgenyiFedotov/store-api-react.git#2e211b0173ffb68276a080e09218332f76e5bca4"
   dependencies:
     store-api "https://github.com/EvgenyiFedotov/store-api.git"
 
 "store-api@https://github.com/EvgenyiFedotov/store-api.git":
   version "1.0.0"
-  resolved "https://github.com/EvgenyiFedotov/store-api.git#494b8bc9fe587229a64f849fcecd6b276ecef56b"
+  resolved "https://github.com/EvgenyiFedotov/store-api.git#ef1bf9476942f159073db1fc81ddf92ac184ccec"
 
 string-convert@^0.2.0:
   version "0.2.1"
