@@ -1,47 +1,27 @@
 import * as React from 'react';
-import { Button } from "antd";
-import { ContextScope, store } from "store-api";
-import { Context, useContext, useStoreState } from "store-api-react";
+import { ContextScope } from "store-api";
+import { Context } from "store-api-react";
+import { Route, Switch } from "react-router-dom";
 
-const numApi = store({
-  init: -1,
-  api: ({ setState, getState }) => ({
-    inc: () => setState(prev => prev + 1),
-    dec: () => setState(getState() - 1),
-  }),
-});
-
-export const getCountClick = (init?: number) => numApi({ name: "count-click", init });
+import { Page } from "./ui/templates/page";
+import { PageHome } from "./pages/home";
+import { PageJoke } from "./pages/joke";
 
 export const App = (props: { context: ContextScope }) => {
   return (
     <Context value={props.context}>
-      <CountClick />
+      <Switch>
+        <Route path="/joke">
+          <Page>
+            <PageJoke />
+          </Page>
+        </Route>
+        <Route path="*">
+          <Page>
+            <PageHome />
+          </Page>
+        </Route>
+      </Switch>
     </Context>
-  );
-};
-
-const CountClick = () => {
-  const countClick = useContext(getCountClick);
-  const count = useStoreState(countClick);
-
-  return (
-    <div>
-      <div>{count}</div>
-      <Button
-        onClick={() => {
-          countClick.api.dec.call();
-        }}
-      >
-        Dec
-      </Button>
-      <Button
-        onClick={() => {
-          countClick.api.inc.call();
-        }}
-      >
-        Inc
-      </Button>
-    </div>
   );
 };

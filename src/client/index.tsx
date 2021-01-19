@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import { context, deserializeContext } from "store-api";
+import { BrowserRouter } from "react-router-dom";
 
 import { App } from "./app";
 
@@ -13,4 +14,9 @@ if (_window.initData) {
   deserializeContext(_window.initData, app);
 }
 
-ReactDOM.hydrate(<App context={app} />, document.getElementById("root"));
+ReactDOM.hydrate(
+  <BrowserRouter>
+    <App context={app} />
+  </BrowserRouter>,
+  document.getElementById("root")
+);
