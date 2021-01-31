@@ -2,12 +2,18 @@ import * as express from 'express';
 import * as http from "http";
 import * as ReactDOMServer from "react-dom/server";
 import * as React from 'react';
-import { ContextScope, context, serializeContext } from "store-api";
+import { context, serializeContext } from "store-api";
 import { StaticRouter } from "react-router-dom";
+import * as fetch from "node-fetch";
 
 import { html } from "../client/html";
 import { App } from "../client/app";
-import { getCountClick } from "../client/provider";
+
+const _globalThis: any = globalThis;
+
+if (!_globalThis.fetch) {
+  _globalThis.fetch = fetch;
+}
 
 const port = 5000;
 const app = express();
@@ -20,24 +26,18 @@ app.get("/favicon.ico", (req, res) => res.sendStatus(404));
 const renderPage = async (payload: {
   title?: string;
   url: string;
-  preload?:(contextScope: ContextScope) => (void | Promise<void>);
 }) => {
   const routerContext = {};
   const app = context();
 
-  if (payload.preload) {
-    await payload.preload(app);
-  }
+  const content = ReactDOMServer.renderToString(
+    <StaticRouter location={payload.url} context={routerContext}>
+      <App context={app} />
+    </StaticRouter>
+  );
+  const data = await serializeContext(app);
 
-  return html({
-    title: payload.title,
-    content: ReactDOMServer.renderToString(
-      <StaticRouter location={payload.url} context={routerContext}>
-        <App context={app} />
-      </StaticRouter>
-    ),
-    data: serializeContext(app),
-  });
+  return html({ title: payload.title, content, data });
 };
 
 app.get("/", async (req, res) => {
@@ -45,9 +45,6 @@ app.get("/", async (req, res) => {
     res.send(await renderPage({
       title: "Home",
       url: req.url,
-      // preload: (app) => {
-      //   app(getCountClick).api.inc.call();
-      // }
     }));
   } catch (error) {}
 });

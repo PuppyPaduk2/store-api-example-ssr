@@ -11,7 +11,10 @@ const app = context();
 const _window: any = window;
 
 if (_window.initData) {
-  deserializeContext(_window.initData, app);
+  deserializeContext({
+    context: app,
+    data: _window.initData,
+  });
 }
 
 ReactDOM.hydrate(

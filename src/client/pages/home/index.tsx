@@ -1,27 +1,47 @@
 import * as React from 'react';
-import { useContext, useStoreState } from "store-api-react";
+import { rootContext, contractStores, contractDepends, depend } from "store-api";
+import { useContext, useStore } from "store-api-react";
 import { Button, Space } from "antd";
 
-import { getCountClick } from "../../provider";
+import { numberApi } from "../../lib/store-apis";
+
+const rootStores = rootContext(contractStores({
+  countRequests: numberApi,
+}).stores());
+
+const appContract = contractStores({
+  countRequests: numberApi,
+});
+
+const appDepends = contractDepends({
+  useRootCountRequests: depend({
+    name: "useRootCountRequests",
+    stores: appContract.config(["countRequests"]),
+    handler: ({ countRequests }) => {
+      rootStores.countRequests.api.inc();
+      return countRequests.api.set(rootStores.countRequests.getState());
+    },
+  }),
+});
+
+const appDependsAll = appDepends.depends();
 
 export const PageHome: React.FC = () => {
-  const countClick = useContext(getCountClick);
-  const count = useStoreState(countClick);
+  useContext(appDependsAll);
+
+  const countRequests = useContext(appContract.store.countRequests);
+  const countRequestsValue = useStore(countRequests);
 
   return (
     <Space>
-      <div>{count}</div>
+      <div>{countRequestsValue}</div>
       <Button
-        onClick={() => {
-          countClick.api.dec.call();
-        }}
+        onClick={countRequests.api.dec}
       >
         Dec
       </Button>
       <Button
-        onClick={() => {
-          countClick.api.inc.call();
-        }}
+        onClick={countRequests.api.inc}
       >
         Inc
       </Button>

@@ -6,18 +6,20 @@
   "scripts": {
     "build:client": "webpack -c ./config/webpack/client.js",
     "build:server": "webpack -c ./config/webpack/server.js",
-    "start:client": "yarn build:client --watch",
-    "start:server": "yarn build:client && yarn build:server --watch",
-    "store-api": "yarn remove store-api && yarn add https://github.com/EvgenyiFedotov/store-api.git",
-    "store-api-react": "yarn remove store-api-react && yarn add https://github.com/EvgenyiFedotov/store-api-react.git"
+    "start:client": "webpack -c ./config/webpack/client.js --watch",
+    "start:server": "webpack -c ./config/webpack/server.js --watch",
+    "store-api": "npm uninstall store-api && npm install https://github.com/EvgenyiFedotov/store-api.git",
+    "store-api-react": "npm uninstall store-api-react && npm install https://github.com/EvgenyiFedotov/store-api-react.git"
   },
   "devDependencies": {
     "@types/antd": "^1.0.0",
     "@types/express": "^4.17.11",
+    "@types/node-fetch": "^2.5.8",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.7",
+    "@types/uuid": "^8.3.0",
     "css-loader": "^5.0.1",
     "mini-css-extract-plugin": "^1.3.4",
     "nodemon-webpack-plugin": "^4.4.4",
@@ -30,11 +32,13 @@
   "dependencies": {
     "antd": "^4.10.2",
     "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
-    "store-api": "https://github.com/EvgenyiFedotov/store-api.git",
-    "store-api-react": "https://github.com/EvgenyiFedotov/store-api-react.git",
-    "styled-components": "^5.2.1"
+    "store-api": "git+https://github.com/EvgenyiFedotov/store-api.git",
+    "store-api-react": "git+https://github.com/EvgenyiFedotov/store-api-react.git",
+    "styled-components": "^5.2.1",
+    "uuid": "^8.3.2"
   }
 }
